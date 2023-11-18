@@ -40,7 +40,9 @@ jobs:
 
       - name: Run ESLint
         run: |
+          ls -ll
           cd nestjs
+          ls -ll
           npm run lint
 
       - name: AI Code Reviewer
