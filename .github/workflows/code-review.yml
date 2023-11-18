@@ -5,13 +5,35 @@ on:
     types:
       - opened
       - synchronize
+
 permissions: write-all
+
 jobs:
   review:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install yamllint
+        run: |
+          npm install -g yamllint
+
+      - name: Lint YAML files
+        run: |
+          yamllint serverless.yml
+
+      - name: Run ESLint
+        run: npm run lint
 
       - name: AI Code Reviewer
         uses: makssie/ai-codereviewer@main
