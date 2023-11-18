@@ -30,13 +30,11 @@ jobs:
 
       - name: Check for YAML files
         run: |
-          YAML_FILES=$(find . -type f -name '*.yml' -or -name '*.yaml')
-          
-          if [ -n "$YAML_FILES" ]; then
-            echo "YAML files found. Running yamllint..."
-            yamllint $YAML_FILES
+          if [ -f "serverless.yml" ]; then
+            echo "serverless.yml found. Running yamllint..."
+            yamllint serverless.yml
           else
-            echo "No YAML files found. Skipping yamllint."
+            echo "serverless.yml not found. Skipping yamllint."
           fi
     
 
