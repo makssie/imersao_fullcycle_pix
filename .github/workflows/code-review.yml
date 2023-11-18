@@ -43,7 +43,9 @@ jobs:
           npm install @typescript-eslint/eslint-plugin@latest --save-dev
 
       - name: Run ESLint
-        run: npm run lint
+        run: |
+          cd nestjs
+          npm run lint
 
       - name: AI Code Reviewer
         uses: makssie/ai-codereviewer@main
