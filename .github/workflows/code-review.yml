@@ -22,7 +22,7 @@ jobs:
           node-version: '14'
 
       - name: Install npm dependencies
-        run: npm install eslint
+        run: npm install -g eslint
 
       - name: Install yamllint
         run: |
