@@ -21,16 +21,24 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install npm dependencies
+        run: npm install eslint
 
       - name: Install yamllint
         run: |
-          npm install -g yamllint
+          pip install --user yamllint
 
-      - name: Lint YAML files
+      - name: Check for YAML files
         run: |
-          yamllint serverless.yml
+          YAML_FILES=$(find . -type f -name '*.yml' -or -name '*.yaml')
+          
+          if [ -n "$YAML_FILES" ]; then
+            echo "YAML files found. Running yamllint..."
+            yamllint $YAML_FILES
+          else
+            echo "No YAML files found. Skipping yamllint."
+          fi
+    
 
       - name: Run ESLint
         run: npm run lint
