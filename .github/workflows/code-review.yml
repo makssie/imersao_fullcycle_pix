@@ -36,14 +36,14 @@ jobs:
           else
             echo "serverless.yml not found. Skipping yamllint."
           fi
-    
+
+      - name: Install TypeScript ESLint Plugin
+        run: |
+        cd nestjs
+        npm install @typescript-eslint/eslint-plugin@latest --save-dev
 
       - name: Run ESLint
-        run: |
-          ls -ll
-          cd nestjs
-          ls -ll
-          npm run lint
+        run: npm run lint
 
       - name: AI Code Reviewer
         uses: makssie/ai-codereviewer@main
