@@ -39,8 +39,8 @@ jobs:
 
       - name: Install TypeScript ESLint Plugin
         run: |
-        cd nestjs
-        npm install @typescript-eslint/eslint-plugin@latest --save-dev
+          cd nestjs
+          npm install @typescript-eslint/eslint-plugin@latest --save-dev
 
       - name: Run ESLint
         run: npm run lint
