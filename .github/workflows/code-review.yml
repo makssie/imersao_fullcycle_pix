@@ -23,6 +23,7 @@ jobs:
 
       - name: Install npm dependencies
         run: npm install eslint
+        working-directory: nestjs
 
       - name: Install yamllint
         run: |
