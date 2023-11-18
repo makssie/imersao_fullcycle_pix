@@ -39,9 +39,9 @@ jobs:
     
 
       - name: Run ESLint
-        run: npm run lint
-        working-directory: nestjs
-
+        run: |
+          cd nestjs
+          npm run lint
 
       - name: AI Code Reviewer
         uses: makssie/ai-codereviewer@main
