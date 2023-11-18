@@ -22,8 +22,10 @@ jobs:
           node-version: '14'
 
       - name: Install npm dependencies
-        run: npm install eslint
-        working-directory: nestjs
+        run: |
+          ls -ll
+          cd nestjs
+          npm run lint
 
       - name: Install yamllint
         run: |
