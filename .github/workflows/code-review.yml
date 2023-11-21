@@ -1,0 +1,58 @@
+name: AI Code Reviewer
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+permissions: write-all
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install npm dependencies
+        run: |
+          cd nestjs
+          npm install --only=dev
+
+      - name: Install yamllint
+        run: |
+          pip install --user yamllint
+
+      - name: Check for YAML files
+        run: |
+          if [ -f "serverless.yml" ]; then
+            echo "serverless.yml found. Running yamllint..."
+            yamllint serverless.yml
+          else
+            echo "serverless.yml not found. Skipping yamllint."
+          fi
+
+      - name: Install TypeScript ESLint Plugin
+        run: |
+          cd nestjs
+          npm install @typescript-eslint/eslint-plugin@latest --save-dev
+
+      - name: Run ESLint
+        run: |
+          cd nestjs
+          npm run lint
+
+      - name: AI Code Reviewer
+        uses: makssie/ai-codereviewer@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_MODEL: "gpt-4" # Optional: defaults to "gpt-4"
+          exclude: "**/*.json, **/*.md" # Optional: exclude patterns separated by commas
